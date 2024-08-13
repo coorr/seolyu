@@ -32,12 +32,11 @@ bin/
 
 ### config ###
 /logs/
-/src/main/resources-local/application.yaml
-/src/main/resources-prd/application.yaml
-
 application.yaml
 application-config.yaml
 application-*.yaml
+*.yaml
+src/resource
 .gradle
 build/
 out/
