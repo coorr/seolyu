@@ -1,0 +1,13 @@
+spring:
+  config:
+    import: application-config.yaml
+  profiles:
+    include: config
+    group:
+      prd: env-production
+
+---
+spring:
+  config:
+    activate:
+      on-profile: env-production

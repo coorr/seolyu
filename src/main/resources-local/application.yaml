@@ -1,0 +1,18 @@
+spring:
+  config:
+    import: application-config.yaml
+  profiles:
+    include: config
+    group:
+      local: env-local
+
+---
+spring:
+  config:
+    activate:
+      on-profile: env-local
+
+session:
+  cookie:
+    domain: localhost
+    name: seyu
