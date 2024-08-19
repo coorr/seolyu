@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.mainstream.seolyu.common.security.EncryptService;
 import kr.mainstream.seolyu.config.CookieProperties;
-import kr.mainstream.seolyu.domain.member.login.LoginService;
+import kr.mainstream.seolyu.domain.reviewer.login.LoginService;
 import kr.mainstream.seolyu.infrastructure.redis.LoginSession;
 import kr.mainstream.seolyu.infrastructure.redis.RedisEnv;
 import kr.mainstream.seolyu.infrastructure.redis.RedisService;
@@ -53,7 +53,7 @@ public class GatewayService {
         response.addCookie(ck);
     }
 
-    public String getMemberCookie(Cookie[] cookies) {
+    public String getReviewerCookie(Cookie[] cookies) {
         if (null == cookies) return null;
 
         for (Cookie cookie : cookies) {
@@ -84,7 +84,7 @@ public class GatewayService {
         return null;
     }
 
-    public LoginSession getLoginSession(MobileHeader mobileHeader, String referenceKey, String clientId) {
+    public LoginSession getLoginSession(RequestHeader requestHeader, String referenceKey, String clientId) {
         LoginSession loginSession = redisService.getLoginSession(referenceKey);
         if (ObjectUtils.isEmpty(loginSession)) {
             return null;
@@ -94,11 +94,11 @@ public class GatewayService {
             return null;
         }
 
-        if (mobileHeader.isAppCall()) {
-            if (ObjectUtils.isEmpty(loginSession.getMemberId())) {
+        if (requestHeader.isAppCall()) {
+            if (ObjectUtils.isEmpty(loginSession.getReviewerId())) {
                 return null;
             }
-            if (!mobileHeader.getMemberId().equals(loginSession.getMemberId())) {
+            if (!requestHeader.getReviewerId().equals(loginSession.getReviewerId())) {
                 return null;
             }
         }
@@ -116,24 +116,24 @@ public class GatewayService {
             token = UUID.randomUUID().toString();
             saveCookie(cookieProperties.getName(), token, response);
         } else {
-            token = String.valueOf(loginInfo.getMemberId());
+            token = String.valueOf(loginInfo.getReviewerId());
         }
-        redisService.createLoginSession(this.getReferenceKey(token), new LoginSession(loginInfo.getMemberId(), loginInfo.getClientId()));
-        log.debug("[사용자] 로그인 loginInfo={}, isWebCall={}", loginInfo, isWebCall);
+        redisService.createLoginSession(this.getReferenceKey(token), new LoginSession(loginInfo.getReviewerId(), loginInfo.getClientId()));
+        log.debug("[리뷰어] 로그인 loginInfo={}, isWebCall={}", loginInfo, isWebCall);
 
-        return loginService.getLoginInfo(loginInfo.getMemberId(), loginInfo.getClientId());
+        return loginService.getLoginInfo(loginInfo.getReviewerId(), loginInfo.getClientId());
     }
 
-    @CacheEvict(value = LOGIN_INFO_KEY, key = "#memberId")
-    public void logout(Long memberId, boolean isWebCall, HttpServletRequest request, HttpServletResponse response) {
+    @CacheEvict(value = LOGIN_INFO_KEY, key = "#reviewerId")
+    public void logout(Long reviewerId, boolean isWebCall, HttpServletRequest request, HttpServletResponse response) {
         String token;
         if (isWebCall) {
-            token = this.getMemberCookie(request.getCookies());
+            token = this.getReviewerCookie(request.getCookies());
             deleteCookie(cookieProperties.getName(), response);
         } else {
-            token = String.valueOf(memberId);
+            token = String.valueOf(reviewerId);
         }
         redisService.deleteLogoutSession(this.getReferenceKey(token));
-        log.debug("[사용자] 로그아웃 memberId={}, isWebCall={}", memberId, isWebCall);
+        log.debug("[리뷰어] 로그아웃 reviewerId={}, isWebCall={}", reviewerId, isWebCall);
     }
 }

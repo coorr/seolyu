@@ -23,6 +23,6 @@ public class CustomAuditorAwareConfig implements AuditorAware<Long> {
         if (loginInfo == null) {
             return Optional.ofNullable(1001L);
         }
-        return Optional.ofNullable(loginInfo.getMemberId());
+        return Optional.ofNullable(loginInfo.getReviewerId());
     }
 }

@@ -1,8 +1,8 @@
 package kr.mainstream.seolyu.login;
 
-import kr.mainstream.seolyu.domain.member.Member;
-import kr.mainstream.seolyu.domain.member.MemberJoinStatus;
-import kr.mainstream.seolyu.domain.member.MemberRole;
+import kr.mainstream.seolyu.domain.reviewer.Reviewer;
+import kr.mainstream.seolyu.domain.reviewer.ReviewerJoinStatus;
+import kr.mainstream.seolyu.domain.reviewer.ReviewerRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,19 +11,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginInfo {
-    private Long memberId;
+    private Long reviewerId;
     private String clientId;
     private String email;
     private String name;
-    private MemberRole role;
-    private MemberJoinStatus joinStatus;
+    private ReviewerRole role;
+    private ReviewerJoinStatus joinStatus;
 
-    public LoginInfo(Member member, String clientId) {
-        this.memberId = member.getId();
+    public LoginInfo(Reviewer reviewer, String clientId) {
+        this.reviewerId = reviewer.getId();
         this.clientId = clientId;
-        this.email = member.getEmail();
-        this.name = member.getName();
-        this.role = member.getRole();
-        this.joinStatus = member.getJoinStatus();
+        this.email = reviewer.getEmail();
+        this.name = reviewer.getName();
+        this.role = reviewer.getRole();
+        this.joinStatus = reviewer.getJoinStatus();
     }
 }

@@ -2,6 +2,7 @@ package kr.mainstream.seolyu.domain.applicant;
 
 import jakarta.persistence.*;
 import kr.mainstream.seolyu.common.model.BaseEntityCreateUpdateAggregate;
+import kr.mainstream.seolyu.domain.applicant.definition.JobPosition;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,6 @@ import lombok.Setter;
 @Setter(AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Applicant extends BaseEntityCreateUpdateAggregate {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -24,8 +24,25 @@ public class Applicant extends BaseEntityCreateUpdateAggregate {
     @Column(name = "email", nullable = false, length = 70)
     private String email;
 
-    public Applicant(String name, String email) {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "position", nullable = false, length = 20)
+    private JobPosition position;
+
+    @Column(name = "resume_url")
+    private String resumeUrl;
+
+    @Column(name = "resume_file", nullable = false)
+    private String resumeFile;
+
+    @Column(name = "request_details")
+    private String requestDetails;
+
+    public Applicant(String name, String email, JobPosition position, String resumeUrl, String resumeFile, String requestDetails) {
         this.name = name;
         this.email = email;
+        this.position = position;
+        this.resumeUrl = resumeUrl;
+        this.resumeFile = resumeFile;
+        this.requestDetails = requestDetails;
     }
 }

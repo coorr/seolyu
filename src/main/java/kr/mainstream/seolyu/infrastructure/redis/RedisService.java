@@ -15,18 +15,18 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class RedisService {
 
-    public static final String MEMBER_ID = "member_id";
+    public static final String REVIEWER_ID = "reviewer_id";
     public static final String CLIENT_ID = "client_id";
 
     private final StringRedisTemplate redisTemplate;
 
     public LoginSession getLoginSession(String referenceKey) {
         Map<String, String> map = redisTemplate.<String, String>opsForHash().entries(referenceKey);
-        String memberId = map.get(MEMBER_ID);
+        String reviewerId = map.get(REVIEWER_ID);
         String clientId = map.get(CLIENT_ID);
 
-        if (StringUtils.hasText(memberId) && StringUtils.hasText(clientId)) {
-            return new LoginSession(Long.valueOf(memberId), clientId);
+        if (StringUtils.hasText(reviewerId) && StringUtils.hasText(clientId)) {
+            return new LoginSession(Long.valueOf(reviewerId), clientId);
         }
         return null;
     }
@@ -37,7 +37,7 @@ public class RedisService {
 
     public void createLoginSession(String referenceKey, LoginSession loginSession) {
         Map<String, String> map = new HashMap<>();
-        map.put(MEMBER_ID, String.valueOf(loginSession.getMemberId()));
+        map.put(REVIEWER_ID, String.valueOf(loginSession.getReviewerId()));
         map.put(CLIENT_ID, loginSession.getClientId());
 
         redisTemplate.opsForHash().putAll(referenceKey, map);

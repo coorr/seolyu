@@ -2,11 +2,11 @@ package kr.mainstream.seolyu.interceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kr.mainstream.seolyu.domain.member.login.LoginService;
+import kr.mainstream.seolyu.domain.reviewer.login.LoginService;
 import kr.mainstream.seolyu.infrastructure.redis.LoginSession;
 import kr.mainstream.seolyu.login.GatewayService;
 import kr.mainstream.seolyu.login.LoginInfo;
-import kr.mainstream.seolyu.login.MobileHeader;
+import kr.mainstream.seolyu.login.RequestHeader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import static kr.mainstream.seolyu.filter.MobileHeaderFilter.MOBILE_HEADER;
+import static kr.mainstream.seolyu.filter.RequestHeaderFilter.REQUEST_HEADER;
 
 
 @Component
@@ -28,34 +28,34 @@ public class CookieInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.debug("\n------------------------ CookieCheckInterceptor ----------------------------------\n*** URI: {}", request.getRequestURI());
-        MobileHeader mobileHeader = (MobileHeader) request.getAttribute(MOBILE_HEADER);
-        log.debug("*** 헤더 :: {}", mobileHeader);
+        RequestHeader requestHeader = (RequestHeader) request.getAttribute(REQUEST_HEADER);
+        log.debug("*** 헤더 :: {}", requestHeader);
 
         String token;
         String clientId;
 
-        if (mobileHeader.isWebCall()) {
-            token = gatewayService.getMemberCookie(request.getCookies());
+        if (requestHeader.isWebCall()) {
+            token = gatewayService.getReviewerCookie(request.getCookies());
             clientId = gatewayService.getClientId(request);
         } else {
-            if (!StringUtils.hasLength(mobileHeader.getMid())) return true;
-            token = String.valueOf(mobileHeader.getMemberId());
-            clientId = mobileHeader.getDeviceId();
+            if (!StringUtils.hasLength(requestHeader.getMid())) return true;
+            token = String.valueOf(requestHeader.getReviewerId());
+            clientId = requestHeader.getDeviceId();
         }
 
         String referenceKey = gatewayService.getReferenceKey(token);
         log.debug("*** referenceKey :: {}", referenceKey);
         if (!StringUtils.hasLength(referenceKey)) return true;
 
-        LoginSession loginSession = gatewayService.getLoginSession(mobileHeader, referenceKey, clientId);
+        LoginSession loginSession = gatewayService.getLoginSession(requestHeader, referenceKey, clientId);
         log.debug("*** loginSession :: {}", loginSession);
 
         if (!ObjectUtils.isEmpty(loginSession)) {
             LoginInfo loginInfo = null;
             try {
-                loginInfo = loginService.getLoginInfo(loginSession.getMemberId(), loginSession.getClientId());
+                loginInfo = loginService.getLoginInfo(loginSession.getReviewerId(), loginSession.getClientId());
             } catch (Exception e) {
-                gatewayService.logout(loginSession.getMemberId(), mobileHeader.isWebCall(), request, response);
+                gatewayService.logout(loginSession.getReviewerId(), requestHeader.isWebCall(), request, response);
             }
             if (null != loginInfo) {
                 gatewayService.extendLoginSession(referenceKey);

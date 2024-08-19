@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <!-- include 전에 선언 해줘야 함.-->
-<!--    <property name="LOGS_PATH" value="/home/ubuntu/app/logs"/>-->
+    <property name="LOGS_PATH" value="/Users/gimjinseong/Downloads/project-logs"/>
 
     <include resource="logback-config.xml" />
 

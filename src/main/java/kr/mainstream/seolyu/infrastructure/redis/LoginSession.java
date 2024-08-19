@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class LoginSession {
-    private Long memberId;
+    private Long reviewerId;
     private String clientId;
 }

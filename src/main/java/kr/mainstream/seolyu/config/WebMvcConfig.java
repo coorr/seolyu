@@ -1,6 +1,6 @@
 package kr.mainstream.seolyu.config;
 
-import kr.mainstream.seolyu.domain.member.login.LoginService;
+import kr.mainstream.seolyu.domain.reviewer.login.LoginService;
 import kr.mainstream.seolyu.interceptor.CookieInterceptor;
 import kr.mainstream.seolyu.interceptor.LoginCheckInterceptor;
 import kr.mainstream.seolyu.login.GatewayService;
@@ -35,7 +35,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns(excludePathPatterns);
         registry.addInterceptor(new LoginCheckInterceptor())
                 .excludePathPatterns(excludePathPatterns)
-                .excludePathPatterns("/resume-reviews/**", "/member/login");
+                .excludePathPatterns("/applicants/**", "/login", "/resume-reviews/**", "/resume-reviews");
     }
 
     @Override

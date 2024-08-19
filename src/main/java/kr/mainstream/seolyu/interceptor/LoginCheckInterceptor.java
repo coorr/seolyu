@@ -2,8 +2,8 @@ package kr.mainstream.seolyu.interceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kr.mainstream.seolyu.domain.member.MemberJoinStatus;
-import kr.mainstream.seolyu.domain.member.exception.MemberNotAvailableWithdrawException;
+import kr.mainstream.seolyu.domain.reviewer.ReviewerJoinStatus;
+import kr.mainstream.seolyu.domain.reviewer.exception.NotAvailableWithdrawException;
 import kr.mainstream.seolyu.login.ExpiredLoginSessionException;
 import kr.mainstream.seolyu.login.LoginInfo;
 import lombok.RequiredArgsConstructor;
@@ -36,8 +36,8 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             throw new ExpiredLoginSessionException();
         }
 
-        if (MemberJoinStatus.WITHDRAWAL.equals(loginInfo.getJoinStatus())) {
-            throw new MemberNotAvailableWithdrawException();
+        if (ReviewerJoinStatus.WITHDRAWAL.equals(loginInfo.getJoinStatus())) {
+            throw new NotAvailableWithdrawException();
         }
         return true;
     }
