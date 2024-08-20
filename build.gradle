@@ -58,6 +58,9 @@ dependencies {
 
 	// Mail Service
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	// aws
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }
 
 tasks.named('test') {
@@ -77,6 +80,11 @@ sourceSets {
 	main {
 		java {
 			srcDirs "src/main/java"
+			if (profile.equals('local')) {
+				exclude "kr/mainstream/seolyu/infrastructure/file/production"
+			} else {
+				exclude "kr/mainstream/seolyu/infrastructure/file/development"
+			}
 		}
 		resources {
 			srcDirs "src/main/resources-${profile}"

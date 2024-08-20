@@ -7,6 +7,7 @@
     <logger name="kr.mainstream" level="INFO" />
 
     <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
         <appender-ref ref="DAILY_LOG"/>
         <appender-ref ref="ERROR_DAILY_LOG"/>
     </root>

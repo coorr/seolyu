@@ -9,6 +9,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
+import java.io.UnsupportedEncodingException;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -22,8 +24,9 @@ public class EmailMessageBuilder {
             messageHelper.setTo(to);
             messageHelper.setSubject(emailTemplate.getSubject());
             messageHelper.setText(emailTemplate.getContent());
+            messageHelper.setFrom("seolyu.team@gmail.com", "Seolyu");  // 여기서 발신자 이름 설정
             return message;
-        } catch (MessagingException e) {
+        } catch (MessagingException | UnsupportedEncodingException e) {
             log.error("이메일 메시지 생성 실패: {}", e.getMessage());
             throw new EmailMessageCreateException();
         }
