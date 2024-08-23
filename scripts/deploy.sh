@@ -30,6 +30,8 @@ chmod +x $JAR_NAME
 echo "> $JAR_NAME 실행" >> $REPOSITORY/deploy.log
 
 nohup java -jar \
+  -Dspring.config.location=$REPOSITORY/application-config.yaml  \
+  -Dspring.config.location=$REPOSITORY/application.yaml  \
   -Dspring.profiles.active=prd  \
   $JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
 
