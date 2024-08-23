@@ -1,5 +1,5 @@
-REPOSITORY=/home/ubuntu/action
-PROJECT_NAME=seolyu
+REPOSITORY=/home/ubuntu/seolyu
+PROJECT_NAME=action
 
 echo "> Build 파일 복사"
 
