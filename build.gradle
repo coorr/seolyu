@@ -61,6 +61,9 @@ dependencies {
 
 	// aws
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+	// sentry
+	implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.6.0'
 }
 
 tasks.named('test') {

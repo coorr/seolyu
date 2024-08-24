@@ -1,5 +1,6 @@
 package kr.mainstream.seolyu.common.exception;
 
+import io.sentry.Sentry;
 import jakarta.servlet.http.HttpServletRequest;
 import kr.mainstream.seolyu.common.container.ErrorsResponse;
 import kr.mainstream.seolyu.login.ExpiredLoginSessionException;
@@ -48,6 +49,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorsResponse handleIOException(IOException e) {
         log.error(e.toString(), e);
+        Sentry.captureException(e);
         return ErrorsResponse.create("치명적인 에러가 발생하였습니다. 관리자에게 문의하세요", null);
     }
 
@@ -69,6 +71,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorsResponse handleUnhandledException(Exception e) {
         log.error(e.toString(), e);
+        Sentry.captureException(e);
         return ErrorsResponse.create("치명적인 에러가 발생하였습니다. 관리자에게 문의하세요.", null);
     }
 
