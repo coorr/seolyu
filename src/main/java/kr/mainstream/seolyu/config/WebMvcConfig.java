@@ -28,7 +28,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 "/favicon.ico",
                 "/index.html",
                 "/test",
-                "/test/**"
+                "/test/**",
+                "/health"
         );
 
         registry.addInterceptor(new CookieInterceptor(gatewayService, loginService))

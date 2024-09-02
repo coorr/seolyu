@@ -16,12 +16,7 @@ public class ApplicantService {
     private final ResumeReviewService resumeReviewService;
 
     @Transactional
-    public void save(Applicant applicant) {
-        applicantRepository.save(applicant);
-    }
-
-    @Transactional
-    public Applicant post(ApplicantCreateReqDto dto) {
+    public Applicant save(ApplicantCreateReqDto dto) {
         resumeReviewService.checkPending(dto.getEmail());
 
         FileMetadata metadata = fileStorageService.upload(dto.getFile());

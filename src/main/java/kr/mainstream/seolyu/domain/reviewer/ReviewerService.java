@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -35,7 +33,6 @@ public class ReviewerService {
             log.error("비밀번호 단방향 암호화 중 오류 발생 email : {}, password : {}, message : {}", email, password, e);
             throw new InvalidCredentialsException();
         }
-        List<Reviewer> all = reviewerRepository.findAll();
         return reviewerRepository.findByEmailAndPassword(email, password)
                 .orElseThrow(ReviewerNotFoundException::new);
     }

@@ -43,7 +43,7 @@ public class ApplicantController {
             throw new ValidationIllegalArgumentException(bindingResult);
         }
         validation(file);
-        applicantService.post(new ApplicantCreateReqDto(dto, file));
+        applicantService.save(new ApplicantCreateReqDto(dto, file));
         emailMessageSender.send(emailMessageBuilder.build(dto.getEmail(), RequestCompleteEmailTemplate.create(dto.getName())));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
