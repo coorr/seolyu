@@ -11,8 +11,8 @@ permissions:
     owner: ubuntu
     group: ubuntu
 
-hooks:
-  ApplicationStart:
-    - location: scripts/deploy.sh
-      timeout: 600
-      runas: root
+#hooks:
+#  ApplicationStart:
+#    - location: scripts/deploy.sh
+#      timeout: 600
+#      runas: root
