@@ -41,6 +41,12 @@ public class ApplicantPostReqDtoValidator implements Validator {
             ValidationUtils.invokeValidator(httpUrlValidator, dto.getHttpUrl(), errors);
         }
 
+        try {
+            Long.valueOf(dto.getEventId());
+        } catch (Exception e) {
+            errors.rejectValue("eventId", null, "올바르지 않는 이벤트 ID 입니다.");
+        }
+
         ValidationUtils.invokeValidator(emailValidator, dto.getEmail(), errors);
     }
 }
