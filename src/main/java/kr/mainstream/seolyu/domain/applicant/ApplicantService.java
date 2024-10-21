@@ -1,5 +1,6 @@
 package kr.mainstream.seolyu.domain.applicant;
 
+import kr.mainstream.seolyu.aop.DistributedLock;
 import kr.mainstream.seolyu.domain.applicant.dto.ApplicantCreateReqDto;
 import kr.mainstream.seolyu.domain.event.EventService;
 import kr.mainstream.seolyu.domain.event.applicationIssue.EventApplicantHistory;
@@ -28,7 +29,7 @@ public class ApplicantService {
     private final EventApplicantHistoryService eventApplicantHistoryService;
     private final MessageSender eventMessageSender;
 
-    @Transactional
+    @DistributedLock(key = "#dto.getEventId()")
     public Applicant save(ApplicantCreateReqDto dto, LocalDateTime currentDateTime) {
         eventService.apply(dto.getEventId(), dto.getEmail(), currentDateTime);
 
