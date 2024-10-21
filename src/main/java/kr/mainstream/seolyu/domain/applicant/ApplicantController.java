@@ -63,6 +63,29 @@ public class ApplicantController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @PostMapping("/mq")
+    public ResponseEntity<Void> postMq(
+//            @RequestPart(value = "file", required = false) MultipartFile file,
+            @Valid @RequestPart("applicantPostReqDto") ApplicantPostReqDto dto,
+            BindingResult bindingResult) {
+        applicantPostReqDtoValidator.validate(dto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            throw new ValidationIllegalArgumentException(bindingResult);
+        }
+        MultipartFile file = null;
+        try {
+            byte[] content = "This is a mock file content".getBytes(); // 파일 내용
+            InputStream inputStream = new ByteArrayInputStream(content);
+            file = new MockMultipartFile("file", "mockFile.txt", "text/plain", inputStream); // MockMultipartFile 생성
+        } catch (Exception e) {
+            log.error("MockMultipartFile 에러 발생");
+        }
+//        validation(file);
+        applicantService.saveMq(new ApplicantCreateReqDto(dto, file), LocalDateTime.now());
+        emailMessageSender.send(emailMessageBuilder.build(dto.getEmail(), RequestCompleteEmailTemplate.create(dto.getName())));
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
     private void validation(MultipartFile file) {
         if (file == null || file.isEmpty()) {
             throw new EmptyFileException();

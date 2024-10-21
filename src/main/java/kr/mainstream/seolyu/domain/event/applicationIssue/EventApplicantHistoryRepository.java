@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EventApplicationIssueRepository extends JpaRepository<EventApplicationIssue, Long> {
+public interface EventApplicantHistoryRepository extends JpaRepository<EventApplicantHistory, Long> {
 }

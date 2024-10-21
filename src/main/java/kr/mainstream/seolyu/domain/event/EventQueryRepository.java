@@ -30,4 +30,15 @@ public class EventQueryRepository {
                 )
                 .fetchOne());
     }
+
+    public Optional<Event> findByIdAndIsAvailable(Long id, LocalDateTime dateTime) {
+        return Optional.ofNullable(factory.selectFrom(event)
+                .from(event)
+                .where(
+                        event.id.eq(id),
+                        event.startedAt.loe(dateTime),
+                        event.endedAt.goe(dateTime)
+                )
+                .fetchOne());
+    }
 }

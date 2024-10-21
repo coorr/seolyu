@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum EventApplicationIssueStatus {
+public enum EventApplicantHistoryStatus {
     SUCCESS,
     FAIL
 }

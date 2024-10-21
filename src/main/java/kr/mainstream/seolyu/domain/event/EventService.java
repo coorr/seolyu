@@ -27,7 +27,15 @@ public class EventService {
 
     @DistributedLock(key = "#eventId")
     public void apply(Long eventId, String email, LocalDateTime currentDateTime) {
-        EventRedisEntity event = eventCacheService.getEvent(eventId);
+        EventRedisEntity event = eventCacheService.getAvailableEvent(eventId, currentDateTime);
+        event.validateEventPeriod(currentDateTime);
+        eventRedisService.checkEventQuantityAndDuplicate(event, email);
+        long ttl = Duration.between(currentDateTime, event.getEndedAt()).getSeconds();
+        eventRedisService.add(eventId, email, ttl);
+    }
+
+    public void applyMq(Long eventId, String email, LocalDateTime currentDateTime) {
+        EventRedisEntity event = eventCacheService.getAvailableEvent(eventId, currentDateTime);
         event.validateEventPeriod(currentDateTime);
         eventRedisService.checkEventQuantityAndDuplicate(event, email);
         long ttl = Duration.between(currentDateTime, event.getEndedAt()).getSeconds();

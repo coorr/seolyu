@@ -7,11 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name = "event_application_issue")
+@Entity(name = "event_applicant_history")
 @Getter
 @Setter(AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class EventApplicationIssue extends BaseEntityDateAggregate {
+public class EventApplicantHistory extends BaseEntityDateAggregate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -25,11 +25,11 @@ public class EventApplicationIssue extends BaseEntityDateAggregate {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 30)
-    private EventApplicationIssueStatus status;
+    private EventApplicantHistoryStatus status;
 
-    public EventApplicationIssue(Long eventId, Long applicantId) {
+    public EventApplicantHistory(Long eventId, Long applicantId) {
         this.eventId = eventId;
         this.applicantId = applicantId;
-        this.status = EventApplicationIssueStatus.SUCCESS;
+        this.status = EventApplicantHistoryStatus.SUCCESS;
     }
 }

@@ -6,11 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class EventApplicationIssueService {
-    private final EventApplicationIssueRepository eventApplicationIssueRepository;
+public class EventApplicantHistoryService {
+    private final EventApplicantHistoryRepository eventApplicantHistoryRepository;
 
     @Transactional
-    public void save(EventApplicationIssue eventApplicationIssue) {
-        eventApplicationIssueRepository.save(eventApplicationIssue);
+    public void save(EventApplicantHistory eventApplicantHistory) {
+        eventApplicantHistoryRepository.save(eventApplicantHistory);
     }
 }

@@ -67,6 +67,9 @@ dependencies {
 
 	// redisson
 	implementation 'org.redisson:redisson-spring-boot-starter:3.18.0'
+
+	// rabbitmq
+	implementation 'org.springframework.boot:spring-boot-starter-amqp'
 }
 
 tasks.named('test') {
