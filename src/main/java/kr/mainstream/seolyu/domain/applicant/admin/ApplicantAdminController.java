@@ -29,17 +29,4 @@ public class ApplicantAdminController {
         ApplicantSearchReqDto reqDto = new ApplicantSearchReqDto(dto);
         return ResponseEntity.ok(applicantAdminService.getList(reqDto));
     }
-//
-//    @PatchMapping("/{id}/approve")
-//    public ResponseEntity<Void> updateApprove(@PathVariable String id) {
-//        if (null == id) {
-//            throw new ResumeReviewNotFoundException();
-//        }
-//        ResumeReview resumeReview = resumeReviewAdminService.updateApprove(id);
-//
-//        EmailTemplate emailTemplate = ReportCompleteEmailTemplate.create(resumeReview.getApplicant().getName(), id);
-//        MimeMessage message = emailMessageBuilder.build(resumeReview.getApplicant().getEmail(), emailTemplate);
-//        emailMessageSender.send(message);
-//        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-//    }
 }

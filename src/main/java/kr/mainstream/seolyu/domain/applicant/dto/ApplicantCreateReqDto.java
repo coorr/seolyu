@@ -12,6 +12,7 @@ public class ApplicantCreateReqDto {
     private JobPosition position;
     private String resumeUrl;
     private String requestDetails;
+    private Long eventId;
     private MultipartFile file;
 
     public ApplicantCreateReqDto(ApplicantPostReqDto dto, MultipartFile file) {
@@ -20,6 +21,7 @@ public class ApplicantCreateReqDto {
         this.position = JobPosition.valueOf(dto.getPosition());
         this.resumeUrl = dto.getHttpUrl();
         this.requestDetails = dto.getRequestDetails();
+        this.eventId = Long.valueOf(dto.getEventId());
         this.file = file;
     }
 

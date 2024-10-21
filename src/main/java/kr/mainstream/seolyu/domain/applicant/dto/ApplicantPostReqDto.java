@@ -18,6 +18,10 @@ public class ApplicantPostReqDto {
     @NotBlank(message = "포지션을 선택해주세요.")
     private String position;
 
+    @NotBlank(message = "이벤트 ID는 필수입니다.")
+    private String eventId;
+
     private String httpUrl;
     private String requestDetails;
+
 }

@@ -36,7 +36,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns(excludePathPatterns);
         registry.addInterceptor(new LoginCheckInterceptor())
                 .excludePathPatterns(excludePathPatterns)
-                .excludePathPatterns("/applicants/**", "/login", "/resume-reviews/**", "/resume-reviews");
+                .excludePathPatterns("/applicants/**", "/login", "/resume-reviews/**", "/resume-reviews", "/events/**");
     }
 
     @Override
