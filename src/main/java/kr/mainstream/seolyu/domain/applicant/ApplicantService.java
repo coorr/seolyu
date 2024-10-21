@@ -30,7 +30,7 @@ public class ApplicantService {
     private final MessageSender eventMessageSender;
 
     @DistributedLock(key = "#dto.getEventId()")
-    public Applicant save(ApplicantCreateReqDto dto, LocalDateTime currentDateTime) {
+    public void save(ApplicantCreateReqDto dto, LocalDateTime currentDateTime) {
         eventService.apply(dto.getEventId(), dto.getEmail(), currentDateTime);
 
         FileMetadata metadata = fileStorageService.upload(dto.getFile());
@@ -39,7 +39,6 @@ public class ApplicantService {
         applicantRepository.save(applicant);
         resumeReviewService.initialize(applicant.getId());
         eventApplicantHistoryService.save(new EventApplicantHistory(dto.getEventId(), applicant.getId()));
-        return applicant;
     }
 
     @Transactional
