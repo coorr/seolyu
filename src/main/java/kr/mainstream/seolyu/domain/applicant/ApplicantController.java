@@ -16,10 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.mock.web.MockMultipartFile;
 
@@ -43,7 +40,7 @@ public class ApplicantController {
     @PostMapping
     public ResponseEntity<Void> post(
 //            @RequestPart(value = "file", required = false) MultipartFile file,
-                                     @Valid @RequestPart("applicantPostReqDto") ApplicantPostReqDto dto,
+                                     @Valid @RequestBody ApplicantPostReqDto dto,
                                      BindingResult bindingResult) {
         applicantPostReqDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -66,7 +63,7 @@ public class ApplicantController {
     @PostMapping("/mq")
     public ResponseEntity<Void> postMq(
 //            @RequestPart(value = "file", required = false) MultipartFile file,
-            @Valid @RequestPart("applicantPostReqDto") ApplicantPostReqDto dto,
+            @Valid @RequestBody ApplicantPostReqDto dto,
             BindingResult bindingResult) {
         applicantPostReqDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
