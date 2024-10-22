@@ -33,7 +33,7 @@ public class EventService {
         eventRedisService.add(eventId, email, ttl);
     }
 
-    @DistributedLock(key = "eventId")
+    @DistributedLock(key = "#eventId")
     public void applyMq(Long eventId, String email, LocalDateTime currentDateTime) {
         EventRedisEntity event = eventCacheService.getAvailableEvent(eventId, currentDateTime);
         event.validateEventPeriod(currentDateTime);
