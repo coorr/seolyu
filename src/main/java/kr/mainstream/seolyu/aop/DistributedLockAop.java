@@ -43,11 +43,7 @@ public class DistributedLockAop {
             throw new InterruptedException();
         } finally {
             if (rLock.isLocked() || rLock.isHeldByCurrentThread()) {
-                try {
-                    rLock.unlock();
-                } catch (IllegalMonitorStateException e) {
-                    log.info("Redisson Lock Already UnLock - serviceName: {}, key: {}", method.getName(), key);
-                }
+                rLock.unlock();
             }
         }
     }
