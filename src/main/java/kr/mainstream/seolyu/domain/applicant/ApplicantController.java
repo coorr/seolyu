@@ -10,15 +10,17 @@ import kr.mainstream.seolyu.domain.applicant.dto.ApplicantPostReqDto;
 import kr.mainstream.seolyu.domain.applicant.validator.ApplicantPostReqDtoValidator;
 import kr.mainstream.seolyu.infrastructure.email.EmailMessageBuilder;
 import kr.mainstream.seolyu.infrastructure.email.EmailMessageSender;
-import kr.mainstream.seolyu.infrastructure.email.template.RequestCompleteEmailTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -56,7 +58,7 @@ public class ApplicantController {
         }
 //        validation(file);
         applicantService.save(new ApplicantCreateReqDto(dto, file), LocalDateTime.now());
-        emailMessageSender.send(emailMessageBuilder.build(dto.getEmail(), RequestCompleteEmailTemplate.create(dto.getName())));
+//        emailMessageSender.send(emailMessageBuilder.build(dto.getEmail(), RequestCompleteEmailTemplate.create(dto.getName())));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -79,7 +81,7 @@ public class ApplicantController {
         }
 //        validation(file);
         applicantService.saveMq(new ApplicantCreateReqDto(dto, file), LocalDateTime.now());
-        emailMessageSender.send(emailMessageBuilder.build(dto.getEmail(), RequestCompleteEmailTemplate.create(dto.getName())));
+//        emailMessageSender.send(emailMessageBuilder.build(dto.getEmail(), RequestCompleteEmailTemplate.create(dto.getName())));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

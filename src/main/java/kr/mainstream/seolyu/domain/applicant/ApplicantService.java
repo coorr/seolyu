@@ -15,7 +15,6 @@ import kr.mainstream.seolyu.infrastructure.message.event.builder.EventMessageBui
 import kr.mainstream.seolyu.infrastructure.message.event.template.EventApplicantCreateMessageTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -41,7 +40,6 @@ public class ApplicantService {
         eventApplicantHistoryService.save(new EventApplicantHistory(dto.getEventId(), applicant.getId()));
     }
 
-    @Transactional
     public void saveMq(ApplicantCreateReqDto dto, LocalDateTime currentDateTime) {
         eventService.applyMq(dto.getEventId(), dto.getEmail(), currentDateTime);
 
