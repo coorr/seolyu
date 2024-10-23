@@ -40,7 +40,7 @@ public class ApplicantService {
         eventApplicantHistoryService.save(new EventApplicantHistory(dto.getEventId(), applicant.getId()));
     }
 
-    @DistributedLock(key = "#dto.getEventId()")
+
     public void saveMq(ApplicantCreateReqDto dto, LocalDateTime currentDateTime) {
         eventService.applyMq(dto.getEventId(), dto.getEmail(), currentDateTime);
 
