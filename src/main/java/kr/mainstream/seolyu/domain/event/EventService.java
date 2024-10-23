@@ -1,5 +1,6 @@
 package kr.mainstream.seolyu.domain.event;
 
+import kr.mainstream.seolyu.aop.DistributedLock;
 import kr.mainstream.seolyu.domain.event.dto.EventGetResDto;
 import kr.mainstream.seolyu.domain.event.exception.NotFoundEventException;
 import kr.mainstream.seolyu.domain.event.redis.EventCacheService;
@@ -32,7 +33,7 @@ public class EventService {
         eventRedisService.add(eventId, email, ttl);
     }
 
-//    @DistributedLock(key = "#eventId")
+    @DistributedLock(key = "#eventId")
     public void applyMq(Long eventId, String email, LocalDateTime currentDateTime) {
         EventRedisEntity event = eventCacheService.getAvailableEvent(eventId, currentDateTime);
         event.validateEventPeriod(currentDateTime);
