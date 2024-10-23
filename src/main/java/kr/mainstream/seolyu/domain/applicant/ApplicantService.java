@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +39,8 @@ public class ApplicantService {
         applicantRepository.save(applicant);
         resumeReviewService.initialize(applicant.getId());
         eventApplicantHistoryService.save(new EventApplicantHistory(dto.getEventId(), applicant.getId()));
+        List<Applicant> list = applicantRepository.findAll();
+        int size = list.size();
     }
 
 
