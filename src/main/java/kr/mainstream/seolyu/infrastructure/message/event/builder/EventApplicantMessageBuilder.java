@@ -16,7 +16,7 @@ public class EventApplicantMessageBuilder extends EventMessageBuilderHelper<Even
 
     @Override
     public Message build() {
-        EventMessageTemplate eventMessageTemplate = new EventMessageTemplate(getDrill(), getMessage(), templateType.name());
+        EventMessageTemplate eventMessageTemplate = new EventMessageTemplate(getDrill(), getParameter(), templateType.name());
         return new EventMessage(type, eventMessageTemplate);
     }
 }

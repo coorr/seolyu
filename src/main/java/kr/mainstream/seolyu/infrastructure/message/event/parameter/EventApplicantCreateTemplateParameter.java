@@ -1,4 +1,4 @@
-package kr.mainstream.seolyu.infrastructure.message.event.template;
+package kr.mainstream.seolyu.infrastructure.message.event.parameter;
 
 import kr.mainstream.seolyu.domain.applicant.definition.JobPosition;
 import kr.mainstream.seolyu.domain.applicant.dto.ApplicantCreateReqDto;
@@ -9,7 +9,7 @@ import java.io.IOException;
 
 @Getter
 @Setter
-public class EventApplicantCreateMessageTemplate {
+public class EventApplicantCreateTemplateParameter {
     private String name;
     private String email;
     private JobPosition position;
@@ -18,7 +18,7 @@ public class EventApplicantCreateMessageTemplate {
     private Long eventId;
     private byte[] file;
 
-    public EventApplicantCreateMessageTemplate(ApplicantCreateReqDto dto) {
+    public EventApplicantCreateTemplateParameter(ApplicantCreateReqDto dto) {
         this.name = dto.getName();
         this.email = dto.getEmail();
         this.position = dto.getPosition();
