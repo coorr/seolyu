@@ -8,5 +8,5 @@ import lombok.Getter;
 public abstract class common {
     private final String token = "event-message-listener-d604";
     private final Boolean drill;
-    private final Object message;
+    private final Object parameter;
 }

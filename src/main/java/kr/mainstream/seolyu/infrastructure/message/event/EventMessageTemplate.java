@@ -6,8 +6,8 @@ import lombok.Getter;
 @Getter
 public class EventMessageTemplate extends common {
     private final String templateType;
-    public EventMessageTemplate(Boolean drill, Object message, String templateType) {
-        super(drill, message);
+    public EventMessageTemplate(Boolean drill, Object parameter, String templateType) {
+        super(drill, parameter);
         this.templateType = templateType;
     }
 }
