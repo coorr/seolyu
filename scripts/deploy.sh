@@ -39,6 +39,7 @@ fi
 # 2. 첫 번째 인스턴스에 새 버전 배포
 log "> 첫 번째 인스턴스에 새 버전 배포 (PORT: $PORT1)"
 nohup java -jar \
+  -Duser.timezone=Asia/Seoul \
   -Dspring.config.location=$REPOSITORY/application-config.yaml  \
   -Dspring.config.location=$REPOSITORY/application.yaml  \
   -Dspring.profiles.active=prd  \
