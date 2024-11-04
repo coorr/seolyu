@@ -1,9 +1,10 @@
 package kr.mainstream.seolyu.domain.applicant.dto;
 
-import kr.mainstream.seolyu.domain.applicant.Applicant;
 import kr.mainstream.seolyu.domain.applicant.definition.JobPosition;
 import lombok.Getter;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDateTime;
 
 @Getter
 public class ApplicantCreateReqDto {
@@ -14,6 +15,7 @@ public class ApplicantCreateReqDto {
     private String requestDetails;
     private Long eventId;
     private MultipartFile file;
+    private LocalDateTime currentDateTime;
 
     public ApplicantCreateReqDto(ApplicantPostReqDto dto, MultipartFile file) {
         this.name = dto.getName();
@@ -23,9 +25,6 @@ public class ApplicantCreateReqDto {
         this.requestDetails = dto.getRequestDetails();
         this.eventId = Long.valueOf(dto.getEventId());
         this.file = file;
-    }
-
-    public Applicant toEntity(String resumeFile) {
-        return new Applicant(name, email, position, resumeUrl, resumeFile, requestDetails);
+        this.currentDateTime = LocalDateTime.now();
     }
 }

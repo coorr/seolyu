@@ -21,11 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.mock.web.MockMultipartFile;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.time.LocalDateTime;
 
 import static kr.mainstream.seolyu.domain.applicant.ApplicantProperties.MAX_FILE_SIZE;
 import static kr.mainstream.seolyu.domain.applicant.ApplicantProperties.PDF_EXTENSION;
@@ -41,47 +36,15 @@ public class ApplicantController {
     private final EmailMessageSender emailMessageSender;
 
     @PostMapping
-    public ResponseEntity<Void> post(
-//            @RequestPart(value = "file", required = false) MultipartFile file,
+    public ResponseEntity<Void> post(@RequestPart(value = "file", required = false) MultipartFile file,
                                      @Valid @RequestPart("applicantPostReqDto") ApplicantPostReqDto dto,
                                      BindingResult bindingResult) {
         applicantPostReqDtoValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ValidationIllegalArgumentException(bindingResult);
         }
-        MultipartFile file = null;
-        try {
-            byte[] content = "This is a mock file content".getBytes(); // 파일 내용
-            InputStream inputStream = new ByteArrayInputStream(content);
-            file = new MockMultipartFile("file", "mockFile.txt", "text/plain", inputStream); // MockMultipartFile 생성
-        } catch (Exception e) {
-            log.error("MockMultipartFile 에러 발생");
-        }
-//        validation(file);
-        applicantService.save(new ApplicantCreateReqDto(dto, file), LocalDateTime.now());
-        emailMessageSender.send(emailMessageBuilder.build(dto.getEmail(), RequestCompleteEmailTemplate.create(dto.getName())));
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    @PostMapping("/mq")
-    public ResponseEntity<Void> postMq(
-//            @RequestPart(value = "file", required = false) MultipartFile file,
-            @Valid @RequestPart("applicantPostReqDto") ApplicantPostReqDto dto,
-            BindingResult bindingResult) {
-        applicantPostReqDtoValidator.validate(dto, bindingResult);
-        if (bindingResult.hasErrors()) {
-            throw new ValidationIllegalArgumentException(bindingResult);
-        }
-        MultipartFile file = null;
-        try {
-            byte[] content = "This is a mock file content".getBytes(); // 파일 내용
-            InputStream inputStream = new ByteArrayInputStream(content);
-            file = new MockMultipartFile("file", "mockFile.txt", "text/plain", inputStream); // MockMultipartFile 생성
-        } catch (Exception e) {
-            log.error("MockMultipartFile 에러 발생");
-        }
-//        validation(file);
-        applicantService.saveMq(new ApplicantCreateReqDto(dto, file), LocalDateTime.now());
+        validation(file);
+        applicantService.save(new ApplicantCreateReqDto(dto, file));
         emailMessageSender.send(emailMessageBuilder.build(dto.getEmail(), RequestCompleteEmailTemplate.create(dto.getName())));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
