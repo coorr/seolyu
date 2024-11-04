@@ -39,9 +39,6 @@ fi
 # 2. 첫 번째 인스턴스에 새 버전 배포
 log "> 첫 번째 인스턴스에 새 버전 배포 (PORT: $PORT1)"
 nohup java -jar \
-  -javaagent:/home/ubuntu/pinpoint/pinpoint-agent-3.0.0/pinpoint-bootstrap-3.0.0.jar \
-  -Dpinpoint.agentId=prd-seolyu \
-  -Dpinpoint.applicationName=prd-seolyuBack \
   -Dspring.config.location=$REPOSITORY/application-config.yaml  \
   -Dspring.config.location=$REPOSITORY/application.yaml  \
   -Dspring.profiles.active=prd  \
