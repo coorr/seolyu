@@ -14,7 +14,7 @@ public class KeepAliveController {
     @GetMapping("/health")
     public String ping() {
         log.info("health check");
-        log.info("now : ", LocalDateTime.now());
+        log.info("now : {}", LocalDateTime.now());
         return "ok";
     }
 }
