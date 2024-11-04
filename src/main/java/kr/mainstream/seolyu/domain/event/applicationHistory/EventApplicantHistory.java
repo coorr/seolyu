@@ -1,4 +1,4 @@
-package kr.mainstream.seolyu.domain.event.applicationIssue;
+package kr.mainstream.seolyu.domain.event.applicationHistory;
 
 import jakarta.persistence.*;
 import kr.mainstream.seolyu.common.model.BaseEntityDateAggregate;
