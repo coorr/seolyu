@@ -1,8 +1,8 @@
 package kr.mainstream.seolyu.domain.event;
 
 import kr.mainstream.seolyu.aop.DistributedLock;
-import kr.mainstream.seolyu.domain.event.dto.EventGetResDto;
-import kr.mainstream.seolyu.domain.event.exception.NotFoundEventException;
+import kr.mainstream.seolyu.domain.event.dto.EventGetListReqDto;
+import kr.mainstream.seolyu.domain.event.dto.EventGetListResDto;
 import kr.mainstream.seolyu.domain.event.redis.EventCacheService;
 import kr.mainstream.seolyu.domain.event.redis.EventRedisEntity;
 import kr.mainstream.seolyu.domain.event.redis.EventRedisService;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,9 +21,8 @@ public class EventService {
     private final EventCacheService eventCacheService;
     private final EventRedisService eventRedisService;
 
-    public EventGetResDto getValidEventsByCategory(EventCategory category) {
-        return eventQueryRepository.findByCategoryAndIsAvailable(category, LocalDateTime.now())
-                .orElseThrow(NotFoundEventException::new);
+    public List<EventGetListResDto> getList(EventGetListReqDto dto) {
+        return eventQueryRepository.findAllBySearchConditions(dto, LocalDateTime.now());
     }
 
     @DistributedLock(key = "#eventId")

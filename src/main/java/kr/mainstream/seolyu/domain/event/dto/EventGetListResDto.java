@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class EventGetResDto {
+public class EventGetListResDto {
     private Long id;
     private String name;
 }
